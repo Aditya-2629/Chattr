@@ -29,14 +29,14 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 
+// Serve frontend
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "./dist")));
-
+  const distPath = path.resolve(__dirname, "../dist");
+  app.use(express.static(distPath));
   app.get("*", (_, res) => {
-    res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+    res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
