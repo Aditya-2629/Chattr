@@ -2,10 +2,11 @@
   "name": "chattr",
   "version": "1.0.0",
   "private": true,
- "scripts": {
-  "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend && cp -r frontend/dist backend/dist",
+"scripts": {
+  "build": "npm install --prefix backend && npm install --prefix frontend --include=dev && npm run build --prefix frontend && cp -r frontend/dist backend/dist",
   "start": "node backend/src/server.js"
 },
+
   "engines": {
     "node": "20.x",
     "npm": "9.x"
