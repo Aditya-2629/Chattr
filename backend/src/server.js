@@ -29,15 +29,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 
-// Serve frontend
-if (process.env.NODE_ENV === "production") {
-  const distPath = path.join(__dirname, "dist");
-  app.use(express.static(distPath));
-  app.get("*", (_, res) => {
-    res.sendFile(path.join(distPath, "index.html"));
-  });
-}
-
+// ✅ Serve frontend from frontend/dist (stay inside frontend)
+const distPath = path.join(__dirname, "frontend", "dist");
+app.use(express.static(distPath));
+app.get("*", (_, res) => {
+  res.sendFile(path.join(distPath, "index.html"));
+});
 
 
 app.listen(PORT, () => {
