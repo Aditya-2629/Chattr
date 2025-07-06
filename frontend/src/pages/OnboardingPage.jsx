@@ -33,6 +33,11 @@ const OnboardingPage = () => {
       toast.success("Profile onboarded successfully");
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
       navigate("/"); // ✅ Redirect after success
+
+      // ✅ Add slight delay before navigating
+      setTimeout(() => {
+        navigate("/");
+      }, 300);
     },
     onError: (error) => {
       toast.error(error.response?.data?.message || "Something went wrong!");
