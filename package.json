@@ -1,16 +1,17 @@
 {
-  "name": "streamify",
+  "name": "chattr",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "build": "bun install --prefix backend && bun install --prefix frontend && bun run build --prefix frontend",
-    "start": "bun run start --prefix backend"
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "node backend/src/server.js"
   },
-  "keywords": [],
-  "author": "",
+  "engines": {
+    "node": "20.x",
+    "npm": "9.x"
+  },
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "backend": "^0.0.0"
-  }
+  "description": "Full stack chat app",
+  "keywords": [],
+  "author": ""
 }
