@@ -2,33 +2,235 @@
 @tailwind components;
 @tailwind utilities;
 
-.str-chat__channel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(to bottom, #c9e8c9, #b7e7bb);
-  height: 100%;
+/* Import custom Stream Chat styles */
+@import './styles/stream-chat-custom.css';
+
+/* General scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--b3)) hsl(var(--b2));
 }
 
-.str-chat__container {
-  max-width: 1200px;
-  width: 100%;
-  height: 80% !important;
-  margin: 0 auto !important;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: hsl(var(--b2));
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: hsl(var(--b3));
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--bc) / 0.3);
+}
+
+/* Enhanced animations */
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInFromLeft 0.3s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Mobile safe area handling */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Enhanced focus states */
+.btn:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid hsl(var(--p));
+  outline-offset: 2px;
+}
+
+/* Improved loading states */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--b2)) 25%,
+    hsl(var(--b3)) 50%,
+    hsl(var(--b2)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Enhanced MessengerPage styles */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--p) / 0.3) hsl(var(--b2));
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: hsl(var(--b2));
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(var(--p) / 0.3);
+  border-radius: 4px;
+  border: 2px solid hsl(var(--b2));
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--p) / 0.5);
+}
+
+/* Messages section specific scrollbar */
+.messages-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--p) / 0.4) hsl(var(--b1));
+}
+
+.messages-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages-scrollbar::-webkit-scrollbar-track {
+  background: hsl(var(--b1));
+  border-radius: 3px;
+  margin: 4px 0;
+}
+
+.messages-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(var(--p) / 0.4);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.messages-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--p) / 0.6);
+}
+
+.messages-scrollbar::-webkit-scrollbar-thumb:active {
+  background: hsl(var(--p) / 0.8);
+}
+
+/* Glass morphism effect */
+.glass-effect {
+  backdrop-filter: blur(10px);
+  background: hsla(var(--b2), 0.8);
+  border: 1px solid hsla(var(--b3), 0.3);
+}
+
+/* Enhanced hover effects */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px hsla(var(--b3), 0.3);
+}
+
+/* Active chat indicator */
+.active-chat-indicator {
+  position: relative;
   overflow: hidden;
 }
 
-.str-chat__list {
-  background-color: #ffffff;
-  padding: 12px;
+.active-chat-indicator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsla(var(--p), 0.1),
+    transparent
+  );
+  animation: shimmer-active 2s infinite;
 }
 
-.str-chat__list-notifications {
-  display: none;
+@keyframes shimmer-active {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
-.str-chat__message-input {
-  border-top: 1px solid #ddd;
+/* Smooth transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scale animation */
+.active\:scale-98:active {
+  transform: scale(0.98);
+}
+
+/* Enhanced gradient backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, hsl(var(--p)) 0%, hsl(var(--s)) 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, hsl(var(--b2)) 0%, hsl(var(--b3)) 100%);
 }
