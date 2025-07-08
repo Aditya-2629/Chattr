@@ -112,7 +112,7 @@ const MessengerPage = () => {
     <div className="flex h-screen bg-gradient-to-br from-base-100 via-base-200/20 to-base-100 relative overflow-hidden">
       {/* Quick Navigation Bar - Desktop Only */}
       {!isMobile && (
-        <div className="hidden lg:flex w-16 bg-base-200/80 backdrop-blur-md border-r border-base-300 flex-col items-center py-4 space-y-4">
+        <div className="hidden lg:flex w-16 bg-base-200/80 backdrop-blur-md border-r border-base-300 flex-col items-center py-4 space-y-4 flex-shrink-0">
           <button 
             className="btn btn-ghost btn-circle tooltip tooltip-right" 
             data-tip="Home"
@@ -259,7 +259,7 @@ const MessengerPage = () => {
       </div>
 
       {/* Enhanced Chat Area */}
-      <div className={`flex-1 flex flex-col h-screen ${
+      <div className={`flex-1 flex flex-col h-screen min-w-0 ${
         isMobile && showFriendsList && targetUserId ? 'hidden' : ''
       }`}>
         {!targetUserId ? (
@@ -299,13 +299,13 @@ const MessengerPage = () => {
           </div>
         ) : (
           <div className="flex-1 flex flex-col h-full">
-            {/* Enhanced Chat Header */}
-            <div className="bg-gradient-to-r from-base-200/90 to-base-300/60 backdrop-blur-md border-b border-base-300/50 p-4 shadow-sm flex-shrink-0">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
+            {/* Fixed Chat Header - Instagram Style */}
+            <div className="sticky top-0 z-40 bg-gradient-to-r from-base-200/95 to-base-300/95 backdrop-blur-md border-b border-base-300/50 shadow-sm">
+              <div className="flex items-center justify-between p-3 md:p-4">
+                <div className="flex items-center gap-3">
                   {/* Enhanced Back button for all devices */}
                   <button 
-                    className="btn btn-ghost btn-circle btn-sm hover:bg-base-300/50 transition-all border border-base-300/50 bg-base-100/50"
+                    className="btn btn-ghost btn-circle btn-sm hover:bg-base-300/50 transition-all border border-base-300/30 bg-base-100/30"
                     onClick={() => {
                       navigate('/messenger');
                       setShowFriendsList(true);
@@ -316,17 +316,17 @@ const MessengerPage = () => {
                   </button>
                   
                   <div className="avatar">
-                    <div className="w-12 md:w-14 rounded-full ring-2 ring-primary/30 shadow-lg">
+                    <div className="w-10 md:w-12 rounded-full ring-2 ring-primary/30 shadow-sm">
                       <img src={selectedFriend?.profilePic} alt={selectedFriend?.fullName} />
                     </div>
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg md:text-xl">{selectedFriend?.fullName}</h3>
-                    <p className="text-sm md:text-base flex items-center gap-2">
+                    <h3 className="font-bold text-base md:text-lg">{selectedFriend?.fullName}</h3>
+                    <p className="text-xs md:text-sm flex items-center gap-1">
                       {selectedFriend?.isOnline ? (
                         <>
                           <span className="w-2 h-2 bg-success rounded-full animate-pulse"></span>
-                          <span className="text-success">Online • Active now</span>
+                          <span className="text-success">Active now</span>
                         </>
                       ) : (
                         <>
@@ -339,41 +339,48 @@ const MessengerPage = () => {
                 </div>
                 
                 {/* Enhanced Action Buttons */}
-                <div className="flex items-center gap-2">
-                  <button className="btn btn-ghost btn-circle btn-sm md:btn-md hover:bg-base-300/50 transition-all tooltip" data-tip="Voice Call">
-                    <PhoneIcon className="h-4 w-4 md:h-5 md:w-5" />
+                <div className="flex items-center gap-1">
+                  <button className="btn btn-ghost btn-circle btn-sm hover:bg-base-300/50 transition-all tooltip" data-tip="Voice Call">
+                    <PhoneIcon className="h-4 w-4" />
                   </button>
                   <button 
-                    className="btn btn-ghost btn-circle btn-sm md:btn-md hover:bg-base-300/50 transition-all tooltip" 
+                    className="btn btn-ghost btn-circle btn-sm hover:bg-base-300/50 transition-all tooltip" 
                     data-tip="Video Call"
                     onClick={handleVideoCall}
                   >
-                    <VideoIcon className="h-4 w-4 md:h-5 md:w-5" />
+                    <VideoIcon className="h-4 w-4" />
                   </button>
                   <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle btn-sm md:btn-md hover:bg-base-300/50 transition-all">
-                      <MoreVerticalIcon className="h-4 w-4 md:h-5 md:w-5" />
+                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle btn-sm hover:bg-base-300/50 transition-all">
+                      <MoreVerticalIcon className="h-4 w-4" />
                     </div>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52">
-                      <li><a onClick={() => navigate(`/friends`)}>View Profile</a></li>
-                      <li><a>Clear Chat</a></li>
-                      <li><a className="text-error">Block User</a></li>
+                      <li>
+                        <a onClick={() => navigate(`/friends`)}>View Profile</a>
+                      </li>
+                      <li>
+                        <a>Clear Chat</a>
+                      </li>
+                      <li>
+                        <a className="text-error">Block User</a>
+                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Enhanced Chat Messages */}
-            <div className="flex-1 relative bg-gradient-to-b from-base-100 via-base-200/10 to-base-200/30 min-h-0">
+            {/* Chat Messages Area - Instagram Style */}
+            <div className="flex-1 bg-gradient-to-b from-base-100 via-base-200/10 to-base-200/30 overflow-hidden" style={{ width: '100%' }}>
               <Chat client={chatClient}>
                 <Channel channel={channel}>
-                  <div className="w-full h-full flex flex-col">
-                    <Window>
+                  <div className="h-full flex flex-col" style={{ width: '100%', maxWidth: '100%' }}>
+                    <div className="flex-1 overflow-y-auto min-h-0" style={{ width: '100%' }}>
                       <MessageList />
+                    </div>
+                    <div className="flex-shrink-0 bg-base-100/95 backdrop-blur-md border-t border-base-300/50 p-2" style={{ width: '100%' }}>
                       <MessageInput focus />
-                    </Window>
-                    <Thread />
+                    </div>
                   </div>
                 </Channel>
               </Chat>

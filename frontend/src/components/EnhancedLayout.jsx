@@ -133,7 +133,7 @@ const EnhancedLayout = ({ children, showSidebar = false, fullScreen = false }) =
         </div>
 
         {/* Page Content */}
-        <main className="flex-1 min-h-0">
+        <main className="flex-1 min-h-0 pt-4 lg:pt-0">
           {children}
         </main>
       </div>
