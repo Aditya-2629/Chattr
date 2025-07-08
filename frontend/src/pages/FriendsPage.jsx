@@ -20,7 +20,7 @@ const FriendsPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-base-100 via-base-200/20 to-base-100 p-4 sm:p-6 lg:p-8">
+    <div className="bg-gradient-to-br from-base-100 via-base-200/20 to-base-100 p-4 sm:p-6 lg:p-8">
       <div className="container mx-auto space-y-8">
         {/* Enhanced Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

@@ -1,11 +1,10 @@
+/* Import custom Stream Chat styles */
+@import "./styles/stream-chat-custom.css";
+
+/* General scrollbar styling */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import custom Stream Chat styles */
-@import './styles/stream-chat-custom.css';
-
-/* General scrollbar styling */
 * {
   scrollbar-width: thin;
   scrollbar-color: hsl(var(--b3)) hsl(var(--b2));
@@ -81,7 +80,7 @@
   .safe-area-top {
     padding-top: max(1rem, env(safe-area-inset-top));
   }
-  
+
   .safe-area-bottom {
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
@@ -196,7 +195,7 @@ select:focus-visible {
 }
 
 .active-chat-indicator::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -212,8 +211,12 @@ select:focus-visible {
 }
 
 @keyframes shimmer-active {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 /* Smooth transitions */

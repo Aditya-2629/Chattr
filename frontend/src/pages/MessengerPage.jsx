@@ -303,15 +303,16 @@ const MessengerPage = () => {
             <div className="bg-gradient-to-r from-base-200/90 to-base-300/60 backdrop-blur-md border-b border-base-300/50 p-4 shadow-sm flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  {/* Enhanced Back button */}
+                  {/* Enhanced Back button for all devices */}
                   <button 
-                    className="btn btn-ghost btn-circle btn-sm md:hidden hover:bg-base-300/50 transition-all"
+                    className="btn btn-ghost btn-circle btn-sm hover:bg-base-300/50 transition-all border border-base-300/50 bg-base-100/50"
                     onClick={() => {
                       navigate('/messenger');
                       setShowFriendsList(true);
                     }}
+                    title="Back to messages"
                   >
-                    <ArrowLeftIcon className="h-5 w-5" />
+                    <ArrowLeftIcon className="h-5 w-5 text-base-content" />
                   </button>
                   
                   <div className="avatar">
