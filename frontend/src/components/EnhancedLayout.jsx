@@ -66,7 +66,7 @@ const EnhancedLayout = ({ children, showSidebar = false, fullScreen = false }) =
 
   if (fullScreen) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-base-100 via-base-200/30 to-base-100">
+      <div className="h-screen overflow-hidden bg-gradient-to-br from-base-100 via-base-200/30 to-base-100 flex flex-col">
         {/* Mobile Sidebar Overlay for fullscreen pages */}
         {isMobileSidebarOpen && (
           <div 
@@ -82,16 +82,16 @@ const EnhancedLayout = ({ children, showSidebar = false, fullScreen = false }) =
           </div>
         )}
 
-        {/* Navbar for fullscreen pages */}
-        <div className="sticky top-0 z-30">
+        {/* Fixed Navbar for fullscreen pages */}
+        <div className="flex-shrink-0 sticky top-0 z-30">
           <Navbar 
             showMenuButton={true}
             onMenuClick={openMobileSidebar}
           />
         </div>
 
-        {/* Main content */}
-        <div className="h-[calc(100vh-4rem)]">
+        {/* Main content - takes remaining space */}
+        <div className="flex-1 overflow-hidden">
           {children}
         </div>
       </div>

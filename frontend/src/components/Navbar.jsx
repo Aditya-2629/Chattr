@@ -1,8 +1,9 @@
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
-import { BellIcon, LogOutIcon, MenuIcon, ShipWheelIcon, ArrowLeftIcon } from "lucide-react";
+import { BellIcon, LogOutIcon, MenuIcon, ShipWheelIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 import useLogout from "../hooks/useLogout";
+import BackButton from "./BackButton";
 
 const Navbar = ({ showMenuButton = false, onMenuClick }) => {
   const { authUser } = useAuthUser();
@@ -13,9 +14,6 @@ const Navbar = ({ showMenuButton = false, onMenuClick }) => {
   const isIndividualMessengerPage = location.pathname?.match(/\/messenger\/[^/]+$/);
   const isCallPage = location.pathname?.startsWith("/call");
   
-  // More flexible back button logic
-  const shouldShowBackButton = isIndividualMessengerPage || isChatPage || isCallPage;
-
   const { logoutMutation } = useLogout();
 
   return (
@@ -24,27 +22,8 @@ const Navbar = ({ showMenuButton = false, onMenuClick }) => {
         <div className="flex items-center justify-between">
           {/* Left Side - Menu Button + Logo */}
           <div className="flex items-center gap-3">
-            {/* Back Button for Individual Messenger/Chat Pages */}
-            {shouldShowBackButton && (
-              <button 
-                className="btn btn-ghost btn-circle btn-sm hover:bg-base-300/50 active:bg-base-300/70 border border-base-300/30"
-                onClick={() => {
-                  if (isIndividualMessengerPage) {
-                    navigate('/messenger');
-                  } else if (isChatPage) {
-                    navigate('/messenger');
-                  } else if (isCallPage) {
-                    navigate('/messenger');
-                  } else {
-                    navigate(-1);
-                  }
-                }}
-                aria-label="Go back"
-                title="Go back"
-              >
-                <ArrowLeftIcon className="h-5 w-5" />
-              </button>
-            )}
+            {/* Back Button */}
+            <BackButton />
             
             {/* Mobile Menu Button */}
             {showMenuButton && (
@@ -64,7 +43,7 @@ const Navbar = ({ showMenuButton = false, onMenuClick }) => {
             )}
             
             {/* Logo - Show on Chat/Messenger pages or when no sidebar */}
-            {(isChatPage || isMessengerPage || !showMenuButton) && !shouldShowBackButton && (
+            {(isChatPage || isMessengerPage || !showMenuButton) && (
               <Link to="/" className="flex items-center gap-2">
                 <ShipWheelIcon className="size-8 text-primary" />
                 <span className="hidden sm:block text-2xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">

@@ -7,6 +7,9 @@ import path from "path";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import chatRoutes from "./routes/chat.route.js";
+import groupRoutes from "./routes/group.route.js";
+import notificationRoutes from "./routes/notification.route.js";
+import { handleStreamWebhook } from "./controllers/webhook.controller.js";
 
 import { connectDB } from "./lib/db.js";
 
@@ -28,6 +31,11 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/groups", groupRoutes);
+app.use("/api/notifications", notificationRoutes);
+
+// Stream Chat webhook endpoint
+app.post("/webhook/stream", handleStreamWebhook);
 
 // ✅ Serve frontend from frontend/dist (stay inside frontend)
 const distPath = path.join(__dirname, "frontend", "dist");

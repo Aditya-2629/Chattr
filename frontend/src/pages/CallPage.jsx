@@ -76,20 +76,18 @@ const CallPage = () => {
   if (isLoading || isConnecting) return <PageLoader />;
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center">
-      <div className="relative">
-        {client && call ? (
-          <StreamVideo client={client}>
-            <StreamCall call={call}>
-              <CallContent />
-            </StreamCall>
-          </StreamVideo>
-        ) : (
-          <div className="flex items-center justify-center h-full">
-            <p>Could not initialize call. Please refresh or try again later.</p>
-          </div>
-        )}
-      </div>
+    <div className="h-full w-full overflow-hidden">
+      {client && call ? (
+        <StreamVideo client={client}>
+          <StreamCall call={call}>
+            <CallContent />
+          </StreamCall>
+        </StreamVideo>
+      ) : (
+        <div className="flex items-center justify-center h-full">
+          <p className="text-center px-4">Could not initialize call. Please refresh or try again later.</p>
+        </div>
+      )}
     </div>
   );
 };
@@ -103,9 +101,15 @@ const CallContent = () => {
   if (callingState === CallingState.LEFT) return navigate("/");
 
   return (
-    <StreamTheme>
-      <SpeakerLayout />
-      <CallControls />
+    <StreamTheme className="h-full">
+      <div className="h-full flex flex-col">
+        <div className="flex-1">
+          <SpeakerLayout />
+        </div>
+        <div className="flex-shrink-0">
+          <CallControls />
+        </div>
+      </div>
     </StreamTheme>
   );
 };

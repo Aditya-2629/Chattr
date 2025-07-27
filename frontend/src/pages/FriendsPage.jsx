@@ -3,6 +3,7 @@ import FriendCard from "../components/FriendCard";
 import NoFriendsFound from "../components/NoFriendsFound";
 import { getUserFriends } from "../lib/api";
 import { SearchIcon, UsersIcon } from "lucide-react";
+import BackButton from "../components/BackButton";
 import { useState } from "react";
 
 const FriendsPage = () => {
@@ -25,6 +26,7 @@ const FriendsPage = () => {
         {/* Enhanced Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3">
+            <BackButton customRedirect="/" showAlways={true} />
             <div className="w-3 h-12 bg-gradient-to-b from-primary to-secondary rounded-full"></div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
