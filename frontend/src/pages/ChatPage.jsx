@@ -3,23 +3,55 @@ import { useParams } from "react-router";
 import useAuthUser from "../hooks/useAuthUser";
 import { useQuery } from "@tanstack/react-query";
 import { getStreamToken } from "../lib/api";
-
 import {
   Channel,
-  ChannelHeader,
   Chat,
   MessageInput,
   MessageList,
   Thread,
-  Window,
+  useChannelStateContext,
 } from "stream-chat-react";
 import { StreamChat } from "stream-chat";
 import toast from "react-hot-toast";
+import { VideoIcon } from "lucide-react";
 
 import ChatLoader from "../components/ChatLoader";
-import CallButton from "../components/CallButton";
 
 const STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY;
+
+// ✅ FIXED HEADER
+const CustomHeader = ({ onVideoCall }) => {
+  const { channel } = useChannelStateContext();
+  const members = Object.values(channel.state.members || {});
+  const otherUser = members.find(
+    (m) => m.user.id !== channel.client.userID
+  )?.user;
+
+  return (
+    <div className="flex items-center justify-between p-3 border-b bg-white dark:bg-gray-800">
+      <div className="flex items-center gap-3">
+        <img
+          src={otherUser?.image}
+          alt="profile"
+          className="w-10 h-10 rounded-full object-cover"
+        />
+        <div>
+          <p className="font-semibold text-gray-900 dark:text-white">
+            {otherUser?.name}
+          </p>
+          <p className="text-xs text-gray-500">Online</p>
+        </div>
+      </div>
+      <button
+        onClick={onVideoCall}
+        className="flex items-center px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+      >
+        <VideoIcon className="h-4 w-4" />
+        <span className="ml-1 hidden sm:inline">Video</span>
+      </button>
+    </div>
+  );
+};
 
 const ChatPage = () => {
   const { id: targetUserId } = useParams();
@@ -82,18 +114,24 @@ const ChatPage = () => {
   if (loading || !chatClient || !channel) return <ChatLoader />;
 
   return (
-    <div className="h-[93vh]">
-      <Chat client={chatClient}>
+    <div className="h-screen w-full bg-gray-100 dark:bg-gray-900">
+      <Chat client={chatClient} theme="messaging light">
         <Channel channel={channel}>
-          <div className="w-full relative">
-            <CallButton handleVideoCall={handleVideoCall} />
-            <Window>
-              <ChannelHeader />
+          <div className="flex flex-col h-screen max-w-2xl mx-auto shadow-md bg-white dark:bg-gray-800">
+            {/* ✅ FIXED HEADER */}
+            <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 border-b">
+              <CustomHeader onVideoCall={handleVideoCall} />
+            </div>
+
+            {/* ✅ ONLY CHAT SCROLLS */}
+            <div className="flex-1 overflow-y-auto">
               <MessageList />
-              {/* ✅ Default MessageInput includes quoting */}
+            </div>
+
+            <div className="border-t">
               <MessageInput focus />
-            </Window>
-            {/* ✅ Thread allowed separately */}
+            </div>
+
             <Thread />
           </div>
         </Channel>
