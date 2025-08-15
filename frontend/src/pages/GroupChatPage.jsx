@@ -21,7 +21,6 @@ import {
 import { axiosInstance } from "../lib/axios";
 import useAuthUser from "../hooks/useAuthUser";
 import { toast } from "react-hot-toast";
-// import "";
 
 const GroupChatPage = () => {
   const { groupId } = useParams();
@@ -45,7 +44,9 @@ const GroupChatPage = () => {
       setLoading(true);
 
       // Get group details
+      console.log('Fetching group details for ID:', groupId);
       const groupResponse = await axiosInstance.get(`/groups/${groupId}`);
+      console.log('Group API response:', groupResponse.data);
       const groupData = groupResponse.data.group;
       setGroup(groupData);
 
@@ -61,7 +62,7 @@ const GroupChatPage = () => {
       // Connect user
       await chatClient.connectUser(
         {
-          id: authUser.id,
+          id: authUser._id,
           name: authUser.fullName,
           image: authUser.profilePic,
         },
@@ -130,7 +131,7 @@ const GroupChatPage = () => {
     );
   }
 
-  const isAdmin = group.admin._id === authUser.id;
+  const isAdmin = group.admin._id === authUser._id;
 
   return (
     <div className="h-screen flex flex-col bg-white">
@@ -259,7 +260,7 @@ const GroupChatPage = () => {
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-900">
                       {member.user.fullName}
-                      {member.user._id === authUser.id && " (You)"}
+                      {member.user._id === authUser._id && " (You)"}
                     </p>
                     <p className="text-xs text-gray-500">
                       {member.role === "admin" ? "Admin" : "Member"}

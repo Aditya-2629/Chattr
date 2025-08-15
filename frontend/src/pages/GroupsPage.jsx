@@ -6,6 +6,7 @@ import CreateGroupModal from '../components/CreateGroupModal';
 import GroupCard from '../components/GroupCard';
 import PageLoader from '../components/PageLoader';
 import BackButton from '../components/BackButton';
+import DebugGroupLeave from '../components/DebugGroupLeave';
 import { toast } from 'react-hot-toast';
 
 const GroupsPage = () => {
@@ -23,6 +24,7 @@ const GroupsPage = () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get('/groups');
+      console.log('Groups API response:', response.data);
       setGroups(response.data.groups || []);
     } catch (error) {
       console.error('Error fetching groups:', error);
@@ -119,12 +121,28 @@ const GroupsPage = () => {
               <div>
                 <p className="text-sm font-medium text-gray-600">Admin Of</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {groups.filter(g => g.admin._id === authUser.id).length}
+                  {groups.filter(g => g.admin._id === authUser._id).length}
                 </p>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Debug Section - Remove this in production */}
+        {groups.length > 0 && (
+          <div className="mb-6">
+            <h2 className="text-lg font-semibold mb-3">Debug: Test Leave Group</h2>
+            <div className="grid gap-4">
+              {groups.filter(g => g.admin._id !== authUser._id).slice(0, 1).map(group => (
+                <DebugGroupLeave 
+                  key={group._id} 
+                  group={group} 
+                  onLeaveSuccess={() => fetchGroups()}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Groups Grid */}
         {filteredGroups.length === 0 ? (

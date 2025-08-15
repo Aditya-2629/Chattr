@@ -6,6 +6,10 @@ import LoginPage from "./pages/LoginPage.jsx";
 import NotificationsPage from "./pages/NotificationsPage.jsx";
 import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
+import GroupChatPage from "./pages/GroupChatPage.jsx";
+import GroupsPage from "./pages/GroupsPage.jsx";
+import GroupMembersPage from "./pages/GroupMembersPage.jsx";
+import GroupDiagnosticPage from "./pages/GroupDiagnosticPage.jsx";
 import FriendsPage from "./pages/FriendsPage.jsx";
 import MessengerPage from "./pages/MessengerPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
@@ -128,6 +132,54 @@ const App = () => {
             isAuthenticated && isOnboarded ? (
               <EnhancedLayout fullScreen={true}>
                 <MessengerPage />
+              </EnhancedLayout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+        <Route
+          path="/groups"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <EnhancedLayout showSidebar={true}>
+                <GroupsPage />
+              </EnhancedLayout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+        <Route
+          path="/groups/:groupId/chat"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <EnhancedLayout fullScreen={true}>
+                <GroupChatPage />
+              </EnhancedLayout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+        <Route
+          path="/groups/:groupId/members"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <EnhancedLayout showSidebar={true}>
+                <GroupMembersPage />
+              </EnhancedLayout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+        <Route
+          path="/group-diagnostics"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <EnhancedLayout showSidebar={true}>
+                <GroupDiagnosticPage />
               </EnhancedLayout>
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />

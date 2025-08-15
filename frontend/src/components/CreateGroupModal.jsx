@@ -28,7 +28,8 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
     try {
       setLoadingFriends(true);
       const response = await axiosInstance.get('/users/friends');
-      setFriends(response.data.friends || []);
+      console.log('Friends loaded:', response.data?.length || 0);
+      setFriends(response.data || []);
     } catch (error) {
       console.error('Error fetching friends:', error);
       toast.error('Failed to load friends');
@@ -79,12 +80,15 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
 
     setLoading(true);
     try {
+      console.log('Creating group with data:', formData);
       const response = await axiosInstance.post('/groups', formData);
+      console.log('Create group response:', response.data);
       onGroupCreated(response.data.group);
       toast.success("Group created successfully!");
       onClose();
     } catch (error) {
       console.error("Error creating group:", error);
+      console.error("Error response:", error.response?.data);
       toast.error(error.response?.data?.message || "Failed to create group");
     } finally {
       setLoading(false);
@@ -94,7 +98,7 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
   const filteredFriends = friends.filter(
     (friend) =>
       friend.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      friend.username.toLowerCase().includes(searchTerm.toLowerCase())
+      friend.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -257,7 +261,7 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
                           {friend.fullName}
                         </p>
                         <p className="text-xs text-gray-500">
-                          @{friend.username}
+                          {friend.email}
                         </p>
                       </div>
                     </div>

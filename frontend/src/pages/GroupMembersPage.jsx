@@ -113,7 +113,7 @@ const GroupMembersPage = () => {
     );
   }
 
-  const isAdmin = group.admin._id === authUser.id;
+  const isAdmin = group.admin._id === authUser._id;
   
   // Filter friends who are not already members
   const availableFriends = friends.filter(friend => 
@@ -216,7 +216,7 @@ const GroupMembersPage = () => {
                     <div>
                       <p className="font-medium text-gray-900">
                         {member.user.fullName}
-                        {member.user._id === authUser.id && ' (You)'}
+                        {member.user._id === authUser._id && ' (You)'}
                       </p>
                       <div className="flex items-center space-x-2">
                         <span className={`text-xs px-2 py-1 rounded-full ${
@@ -231,7 +231,7 @@ const GroupMembersPage = () => {
                     </div>
                   </div>
 
-                  {isAdmin && member.user._id !== authUser.id && member.role !== 'admin' && (
+                  {isAdmin && member.user._id !== authUser._id && member.role !== 'admin' && (
                     <button
                       onClick={() => handleRemoveMember(member.user._id)}
                       className="text-red-600 hover:text-red-800 p-2 hover:bg-red-50 rounded-lg transition-colors"

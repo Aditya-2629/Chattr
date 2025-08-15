@@ -21,7 +21,7 @@ const GroupCard = ({ group, currentUser, onGroupUpdated, onGroupDeleted }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const isAdmin = group.admin._id === currentUser.id;
+  const isAdmin = group.admin._id === currentUser._id;
   const memberCount = group.members.length;
   const lastActivity = group.lastActivity
     ? new Date(group.lastActivity)
@@ -36,11 +36,15 @@ const GroupCard = ({ group, currentUser, onGroupUpdated, onGroupDeleted }) => {
 
     setLoading(true);
     try {
-      await axiosInstance.post(`/groups/${group._id}/leave`);
+      console.log('Leaving group:', group._id);
+      const response = await axiosInstance.post(`/groups/${group._id}/leave`);
+      console.log('Leave group response:', response.data);
       onGroupDeleted(group._id);
       toast.success('Left group successfully');
     } catch (error) {
-      toast.error('Failed to leave group');
+      console.error('Leave group error:', error);
+      console.error('Error response:', error.response?.data);
+      toast.error(error.response?.data?.message || 'Failed to leave group');
     } finally {
       setLoading(false);
     }
