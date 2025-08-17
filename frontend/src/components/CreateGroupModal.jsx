@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { X, Users, Search, Plus, Check } from "lucide-react";
 import { axiosInstance } from '../lib/axios';
 import { toast } from "react-hot-toast";
+import { useThemeStore } from "../store/useThemeStore";
 
 const CreateGroupModal = ({ onClose, onGroupCreated }) => {
+  const { theme } = useThemeStore();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -102,18 +104,18 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
   );
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-hidden">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" data-theme={theme}>
+      <div className="bg-base-100 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-hidden shadow-2xl border border-base-300">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-semibold text-gray-900">
+        <div className="flex items-center justify-between p-6 border-b border-base-300 bg-gradient-to-r from-base-200/50 to-base-300/30">
+          <h2 className="text-xl font-semibold text-base-content">
             Create New Group
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-base-content/60 hover:text-base-content transition-all btn btn-ghost btn-circle btn-sm"
           >
-            <X size={24} />
+            <X size={20} />
           </button>
         </div>
 
@@ -126,7 +128,7 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-base-content mb-2"
             >
               Group Name *
             </label>
@@ -137,7 +139,7 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
               value={formData.name}
               onChange={handleInputChange}
               placeholder="Enter group name"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="input input-bordered w-full"
               required
             />
           </div>
@@ -146,7 +148,7 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
           <div>
             <label
               htmlFor="description"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-base-content mb-2"
             >
               Description
             </label>
@@ -157,64 +159,70 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
               onChange={handleInputChange}
               placeholder="Enter group description (optional)"
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="textarea textarea-bordered w-full"
             />
           </div>
 
           {/* Group Settings */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-base-content mb-3">
               Group Settings
             </label>
             <div className="space-y-3">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={formData.settings.isPrivate}
-                  onChange={() => handleSettingChange("isPrivate")}
-                  className="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <span className="text-sm text-gray-700">Private Group</span>
-              </label>
+              <div className="form-control">
+                <label className="label cursor-pointer justify-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={formData.settings.isPrivate}
+                    onChange={() => handleSettingChange("isPrivate")}
+                    className="checkbox checkbox-primary"
+                  />
+                  <span className="label-text">Private Group</span>
+                </label>
+              </div>
 
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={formData.settings.onlyAdminsCanMessage}
-                  onChange={() => handleSettingChange("onlyAdminsCanMessage")}
-                  className="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <span className="text-sm text-gray-700">
-                  Only admins can send messages
-                </span>
-              </label>
+              <div className="form-control">
+                <label className="label cursor-pointer justify-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={formData.settings.onlyAdminsCanMessage}
+                    onChange={() => handleSettingChange("onlyAdminsCanMessage")}
+                    className="checkbox checkbox-primary"
+                  />
+                  <span className="label-text">
+                    Only admins can send messages
+                  </span>
+                </label>
+              </div>
 
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={formData.settings.onlyAdminsCanAddMembers}
-                  onChange={() =>
-                    handleSettingChange("onlyAdminsCanAddMembers")
-                  }
-                  className="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <span className="text-sm text-gray-700">
-                  Only admins can add members
-                </span>
-              </label>
+              <div className="form-control">
+                <label className="label cursor-pointer justify-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={formData.settings.onlyAdminsCanAddMembers}
+                    onChange={() =>
+                      handleSettingChange("onlyAdminsCanAddMembers")
+                    }
+                    className="checkbox checkbox-primary"
+                  />
+                  <span className="label-text">
+                    Only admins can add members
+                  </span>
+                </label>
+              </div>
             </div>
           </div>
 
           {/* Member Selection */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-base-content mb-3">
               Add Members ({formData.memberIds.length} selected)
             </label>
 
             {/* Search Bar */}
             <div className="relative mb-3">
               <Search
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-base-content/40"
                 size={16}
               />
               <input
@@ -222,45 +230,50 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
                 placeholder="Search friends..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="input input-bordered w-full pl-10"
               />
             </div>
 
             {/* Friends List */}
-            <div className="border border-gray-200 rounded-lg max-h-48 overflow-y-auto">
+            <div className="border border-base-300 rounded-lg max-h-48 overflow-y-auto bg-base-50">
               {loadingFriends ? (
-                <div className="p-4 text-center text-gray-500">
-                  Loading friends...
+                <div className="p-4 text-center text-base-content/60">
+                  <div className="loading loading-spinner loading-sm"></div>
+                  <p>Loading friends...</p>
                 </div>
               ) : filteredFriends.length === 0 ? (
-                <div className="p-4 text-center text-gray-500">
+                <div className="p-4 text-center text-base-content/60">
                   {searchTerm ? "No friends found" : "No friends available"}
                 </div>
               ) : (
                 filteredFriends.map((friend) => (
                   <div
                     key={friend._id}
-                    className="flex items-center justify-between p-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                    className="flex items-center justify-between p-3 hover:bg-base-200/50 border-b border-base-300/50 last:border-b-0 transition-all"
                   >
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-                        {friend.profilePic ? (
-                          <img
-                            src={friend.profilePic}
-                            alt={friend.fullName}
-                            className="w-full h-full rounded-full object-cover"
-                          />
-                        ) : (
-                          <span className="text-sm font-medium text-gray-700">
-                            {friend.fullName.charAt(0)}
-                          </span>
-                        )}
+                      <div className="avatar">
+                        <div className="w-10 rounded-full">
+                          {friend.profilePic ? (
+                            <img
+                              src={friend.profilePic}
+                              alt={friend.fullName}
+                              className="w-full h-full rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className="bg-primary/20 w-full h-full rounded-full flex items-center justify-center">
+                              <span className="text-sm font-medium text-primary">
+                                {friend.fullName.charAt(0)}
+                              </span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-medium text-base-content">
                           {friend.fullName}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-base-content/60">
                           {friend.email}
                         </p>
                       </div>
@@ -268,16 +281,18 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
                     <button
                       type="button"
                       onClick={() => handleMemberToggle(friend._id)}
-                      className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors ${
+                      className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 hover:scale-110 active:scale-95 ${
                         formData.memberIds.includes(friend._id)
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                          ? "bg-blue-600 text-white shadow-lg ring-2 ring-blue-200 hover:bg-blue-700"
+                          : "bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-700 active:bg-gray-400"
                       }`}
+                      title={formData.memberIds.includes(friend._id) ? 'Remove from group' : 'Add to group'}
+                      aria-label={`${formData.memberIds.includes(friend._id) ? 'Remove' : 'Add'} ${friend.fullName} ${formData.memberIds.includes(friend._id) ? 'from' : 'to'} group`}
                     >
                       {formData.memberIds.includes(friend._id) ? (
-                        <Check size={16} />
+                        <Check size={16} className="animate-in fade-in duration-200" />
                       ) : (
-                        <Plus size={16} />
+                        <Plus size={16} className="animate-in fade-in duration-200" />
                       )}
                     </button>
                   </div>
@@ -288,11 +303,13 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
         </form>
 
         {/* Footer */}
-        <div className="flex items-center justify-end space-x-3 p-6 border-t bg-gray-50">
+        <div className="flex items-center justify-end space-x-3 p-6 border-t border-base-300 bg-base-200/30">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="btn btn-outline transition-all duration-200 hover:scale-[0.98] active:scale-95"
+            disabled={loading}
+            aria-label="Cancel group creation"
           >
             Cancel
           </button>
@@ -303,17 +320,19 @@ const CreateGroupModal = ({ onClose, onGroupCreated }) => {
               !formData.name.trim() ||
               formData.memberIds.length === 0
             }
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
+            className="btn btn-primary transition-all duration-200 hover:scale-[0.98] active:scale-95 gap-2"
+            aria-label={loading ? 'Creating group...' : 'Create group'}
+            title={loading ? 'Creating group...' : `Create group with ${formData.memberIds.length} members`}
           >
             {loading ? (
               <>
-                <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                <div className="loading loading-spinner loading-sm"></div>
                 <span>Creating...</span>
               </>
             ) : (
               <>
                 <Users size={16} />
-                <span>Create Group</span>
+                <span>Create Group ({formData.memberIds.length} members)</span>
               </>
             )}
           </button>

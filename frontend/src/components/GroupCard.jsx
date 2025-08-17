@@ -32,34 +32,47 @@ const GroupCard = ({ group, currentUser, onGroupUpdated, onGroupDeleted }) => {
   };
 
   const handleLeaveGroup = async () => {
-    if (!confirm("Are you sure you want to leave this group?")) return;
-
-    setLoading(true);
     try {
+      const confirmed = await new Promise(resolve => {
+        const result = confirm("Are you sure you want to leave this group? You won't receive any messages from this group.");
+        resolve(result);
+      });
+      
+      if (!confirmed) return;
+
+      setLoading(true);
       console.log('Leaving group:', group._id);
       const response = await axiosInstance.post(`/groups/${group._id}/leave`);
       console.log('Leave group response:', response.data);
       onGroupDeleted(group._id);
-      toast.success('Left group successfully');
+      toast.success('✅ Left group successfully');
     } catch (error) {
       console.error('Leave group error:', error);
       console.error('Error response:', error.response?.data);
-      toast.error(error.response?.data?.message || 'Failed to leave group');
+      const errorMessage = error.response?.data?.message || 'Failed to leave group. Please try again.';
+      toast.error(`❌ ${errorMessage}`);
     } finally {
       setLoading(false);
     }
   };
 
   const handleDeleteGroup = async () => {
-    if (!confirm('Are you sure you want to delete this group? This action cannot be undone.')) return;
-    
-    setLoading(true);
     try {
+      const confirmed = await new Promise(resolve => {
+        const result = confirm('⚠️ Are you sure you want to delete this group? This action cannot be undone and all messages will be lost forever.');
+        resolve(result);
+      });
+      
+      if (!confirmed) return;
+      
+      setLoading(true);
       await axiosInstance.delete(`/groups/${group._id}`);
       onGroupDeleted(group._id);
-      toast.success('Group deleted successfully');
+      toast.success('✅ Group deleted successfully');
     } catch (error) {
-      toast.error('Failed to delete group');
+      console.error('Delete group error:', error);
+      const errorMessage = error.response?.data?.message || 'Failed to delete group. Please try again.';
+      toast.error(`❌ ${errorMessage}`);
     } finally {
       setLoading(false);
     }
@@ -214,20 +227,32 @@ const GroupCard = ({ group, currentUser, onGroupUpdated, onGroupDeleted }) => {
         <div className="flex space-x-2">
           <button
             onClick={handleChatClick}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors"
+            className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white py-2 px-4 rounded-lg flex items-center justify-center space-x-2 transition-all duration-200 hover:scale-[0.98] active:scale-95"
             disabled={loading}
+            title="Open chat"
+            aria-label="Open group chat"
           >
-            <MessageSquare size={16} />
-            <span>Chat</span>
+            {loading ? (
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+            ) : (
+              <MessageSquare size={16} />
+            )}
+            <span>{loading ? 'Loading...' : 'Chat'}</span>
           </button>
 
           {isAdmin && (
             <button
               onClick={handleManageMembers}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg flex items-center justify-center transition-colors"
+              className="bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:cursor-not-allowed text-gray-700 py-2 px-4 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-[0.98] active:scale-95"
               disabled={loading}
+              title="Manage members"
+              aria-label="Manage group members"
             >
-              <Settings size={16} />
+              {loading ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-400 border-t-transparent"></div>
+              ) : (
+                <Settings size={16} />
+              )}
             </button>
           )}
         </div>

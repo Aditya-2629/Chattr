@@ -74,7 +74,9 @@ const GroupsPage = () => {
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="mt-4 sm:mt-0 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-colors"
+            className="mt-4 sm:mt-0 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white px-4 py-2 rounded-lg flex items-center space-x-2 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg"
+            title="Create new group"
+            aria-label="Create new group"
           >
             <Plus size={20} />
             <span>Create Group</span>
@@ -160,7 +162,9 @@ const GroupsPage = () => {
             {!searchTerm && (
               <button
                 onClick={() => setShowCreateModal(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg inline-flex items-center space-x-2 transition-colors"
+                className="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white px-4 py-2 rounded-lg inline-flex items-center space-x-2 transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg"
+                title="Create your first group"
+                aria-label="Create your first group"
               >
                 <Plus size={20} />
                 <span>Create Your First Group</span>

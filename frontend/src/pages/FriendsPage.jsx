@@ -64,8 +64,10 @@ const FriendsPage = () => {
                 <h3 className="text-2xl font-bold mb-3">No friends found</h3>
                 <p className="text-base-content/60 mb-6">Try adjusting your search term</p>
                 <button 
-                  className="btn btn-ghost" 
+                  className="btn btn-ghost hover:bg-base-300/50 active:bg-base-300/70 transition-all duration-200 hover:scale-105 active:scale-95" 
                   onClick={() => setSearchTerm("")}
+                  title="Clear search filter"
+                  aria-label="Clear search filter"
                 >
                   Clear search
                 </button>

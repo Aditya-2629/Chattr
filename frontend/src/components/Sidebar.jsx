@@ -84,18 +84,6 @@ const Sidebar = ({ onClose }) => {
           )}
         </Link>
 
-        <Link
-          to="/groups"
-          onClick={onClose || (() => {})}
-          className={`group flex items-center gap-3 px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl transition-all duration-300 touch-manipulation ${
-            currentPath.startsWith("/groups") 
-              ? "bg-gradient-to-r from-primary/15 to-primary/5 text-primary border-r-4 border-primary shadow-lg" 
-              : "hover:bg-base-300/50 text-base-content/70 hover:text-base-content active:bg-base-300/70"
-          }`}
-        >
-          <UsersIcon className="size-5 transition-all duration-300 flex-shrink-0" />
-          <span className="font-medium text-sm sm:text-base">Groups</span>
-        </Link>
 
         <Link
           to="/notifications"
