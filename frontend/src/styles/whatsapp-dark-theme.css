@@ -1,0 +1,87 @@
+/* Dark theme enhancements for WhatsApp style chat */
+
+/* Dark theme message bubbles */
+[data-theme="dark"] .str-chat__message-text {
+  background: hsl(var(--b3)) !important;
+  color: hsl(var(--bc)) !important;
+}
+
+[data-theme="dark"] .str-chat__message-simple--me .str-chat__message-text {
+  background: hsl(var(--p)) !important;
+  color: hsl(var(--pc)) !important;
+}
+
+/* Dark theme message tails */
+[data-theme="dark"] .str-chat__message-simple:not(.str-chat__message-simple--me) .str-chat__message-text::after {
+  border-right-color: hsl(var(--b3));
+}
+
+[data-theme="dark"] .str-chat__message-simple--me .str-chat__message-text::after {
+  border-left-color: hsl(var(--p));
+}
+
+/* Dark theme input styling */
+[data-theme="dark"] .str-chat__input-flat {
+  background: hsl(var(--b2)) !important;
+  border-color: hsl(var(--b3)) !important;
+  color: hsl(var(--bc)) !important;
+}
+
+[data-theme="dark"] .str-chat__input-flat:focus {
+  border-color: hsl(var(--p)) !important;
+  box-shadow: 0 0 0 2px hsl(var(--p) / 0.2) !important;
+}
+
+/* Dark theme button colors */
+[data-theme="dark"] .str-chat__send-button {
+  background: hsl(var(--p)) !important;
+  color: hsl(var(--pc)) !important;
+}
+
+/* Dark theme metadata */
+[data-theme="dark"] .str-chat__message-metadata,
+[data-theme="dark"] .str-chat__message-data {
+  color: hsl(var(--bc) / 0.7) !important;
+}
+
+[data-theme="dark"] .str-chat__message-simple--me .str-chat__message-metadata,
+[data-theme="dark"] .str-chat__message-simple--me .str-chat__message-data {
+  color: hsl(var(--pc) / 0.8) !important;
+}
+
+/* Dark theme background */
+[data-theme="dark"] .str-chat__list {
+  background: linear-gradient(45deg, 
+    hsl(var(--b1)) 0%, 
+    hsl(var(--b2)) 50%, 
+    hsl(var(--b1)) 100%) !important;
+}
+
+/* Improve message input area for dark theme */
+[data-theme="dark"] .str-chat__message-input {
+  background: hsl(var(--b2)) !important;
+  border-top: 1px solid hsl(var(--b3)) !important;
+}
+
+/* Dark theme scrollbar */
+[data-theme="dark"] .str-chat__list::-webkit-scrollbar-thumb {
+  background: hsl(var(--bc) / 0.3) !important;
+}
+
+[data-theme="dark"] .str-chat__list::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--bc) / 0.5) !important;
+}
+
+/* Dark theme date separator */
+[data-theme="dark"] .str-chat__date-separator {
+  color: hsl(var(--bc) / 0.7) !important;
+}
+
+[data-theme="dark"] .str-chat__date-separator-line {
+  background: hsl(var(--b3)) !important;
+}
+
+/* Dark theme typing indicator */
+[data-theme="dark"] .str-chat__typing-indicator {
+  color: hsl(var(--bc) / 0.7) !important;
+}

@@ -12,6 +12,9 @@ import {
   MapPinIcon,
   UserPlusIcon,
   UsersIcon,
+  MessageCircle,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 
 import { capitialize } from "../lib/utils";
@@ -97,6 +100,101 @@ const HomePage = () => {
             </div>
           </div>
         )}
+
+        {/* WhatsApp-Style Interface Showcase */}
+        <div className="animate-fade-in">
+          <div className="card bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 border border-primary/20 shadow-xl">
+            <div className="card-body p-8">
+              <div className="flex flex-col lg:flex-row items-center gap-8">
+                <div className="flex-1 text-center lg:text-left">
+                  <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+                      <MessageCircle className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="w-6 h-6 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center">
+                      <Sparkles className="w-3 h-3 text-white" />
+                    </div>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+                    Experience Our New <span className="text-primary">WhatsApp-Style</span> Chat
+                  </h2>
+                  <p className="text-base-content/70 text-lg mb-6 leading-relaxed">
+                    Enjoy a modern, intuitive messaging experience with beautiful themes, 
+                    real-time messaging, file sharing, and group chat functionality - all in a 
+                    familiar WhatsApp-like interface.
+                  </p>
+                  <div className="flex flex-wrap gap-3 mb-6 justify-center lg:justify-start">
+                    <div className="badge badge-primary gap-2">
+                      <MessageCircle className="w-3 h-3" />
+                      Real-time Messaging
+                    </div>
+                    <div className="badge badge-secondary gap-2">
+                      <UsersIcon className="w-3 h-3" />
+                      Group Chats
+                    </div>
+                    <div className="badge badge-accent gap-2">
+                      <Sparkles className="w-3 h-3" />
+                      Multiple Themes
+                    </div>
+                  </div>
+                  <Link 
+                    to="/whatsapp" 
+                    className="btn btn-primary btn-lg gap-3 shadow-lg hover:shadow-xl transition-all"
+                  >
+                    Try WhatsApp Interface
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </div>
+                
+                <div className="flex-shrink-0">
+                  <div className="mockup-phone border-primary">
+                    <div className="camera"></div>
+                    <div className="display">
+                      <div className="artboard artboard-demo phone-1 bg-gradient-to-b from-base-100 to-base-200">
+                        <div className="p-4 space-y-3">
+                          <div className="flex items-center gap-3 p-3 bg-base-100 rounded-lg shadow-sm">
+                            <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                              JD
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-semibold text-sm">John Doe</h3>
+                              <p className="text-xs text-base-content/60 truncate">Hey! Ready for our language session?</p>
+                            </div>
+                            <div className="text-xs text-primary font-semibold">2m</div>
+                          </div>
+                          
+                          <div className="flex items-center gap-3 p-3 bg-base-100 rounded-lg shadow-sm">
+                            <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white">
+                              <UsersIcon className="w-5 h-5" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-semibold text-sm">Study Group</h3>
+                              <p className="text-xs text-base-content/60 truncate">Alice: Thanks for the grammar tips! 👍</p>
+                            </div>
+                            <div className="bg-primary text-primary-content rounded-full px-1.5 py-0.5 text-xs font-semibold min-w-[16px] text-center">
+                              3
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-3 p-3 bg-base-100 rounded-lg shadow-sm opacity-60">
+                            <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                              SM
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-semibold text-sm">Sarah Miller</h3>
+                              <p className="text-xs text-base-content/60 truncate">See you tomorrow for practice!</p>
+                            </div>
+                            <div className="text-xs text-base-content/50">1h</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Divider */}
         <div className="divider divider-primary">

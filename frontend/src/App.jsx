@@ -9,6 +9,7 @@ import ChatPage from "./pages/ChatPage.jsx";
 import EnhancedMessengerPage from "./pages/EnhancedMessengerPage.jsx";
 import FriendsPage from "./pages/FriendsPage.jsx";
 import MessengerPage from "./pages/MessengerPage.jsx";
+import WhatsAppMessengerPage from "./pages/WhatsAppMessengerPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
 
 import { Toaster } from "react-hot-toast";
@@ -115,9 +116,7 @@ const App = () => {
           path="/messenger"
           element={
             isAuthenticated && isOnboarded ? (
-              <EnhancedLayout fullScreen={true}>
-                <EnhancedMessengerPage />
-              </EnhancedLayout>
+              <WhatsAppMessengerPage />
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
@@ -127,9 +126,17 @@ const App = () => {
           path="/messenger/:id"
           element={
             isAuthenticated && isOnboarded ? (
-              <EnhancedLayout fullScreen={true}>
-                <EnhancedMessengerPage />
-              </EnhancedLayout>
+              <WhatsAppMessengerPage />
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+        <Route
+          path="/whatsapp"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <WhatsAppMessengerPage />
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )
